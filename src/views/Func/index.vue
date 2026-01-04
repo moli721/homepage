@@ -1,6 +1,6 @@
 <template>
   <!-- 功能区域 -->
-  <div :class="store.mobileFuncState ? 'function mobile' : 'function'">
+  <div class="function" :class="{ mobile: store.innerWidth <= 720 }">
     <el-row :gutter="20">
       <el-col :span="12">
         <div class="left">
@@ -66,18 +66,56 @@ onBeforeUnmount(() => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  // 移动端：显示一言和音乐，隐藏时间天气
   &.mobile {
+    height: auto;
+    width: 100%;
+    padding: 0 10px;
     .el-row {
       .el-col {
         &:nth-of-type(1) {
-          display: contents;
+          display: block;
+          padding: 0 !important;
+          flex: none;
+          max-width: none;
+          width: 100%;
         }
         &:nth-of-type(2) {
           display: none;
         }
       }
     }
+    .left {
+      height: auto;
+      // 移动端一言卡片
+      :deep(.hitokoto) {
+        min-height: 140px;
+        padding: 24px;
+        .content .text {
+          font-size: 1.15rem;
+          -webkit-line-clamp: 4;
+        }
+        .content .from {
+          font-size: 1.1rem;
+        }
+      }
+      // 移动端音乐卡片
+      :deep(.music) {
+        min-height: 160px;
+        padding: 24px;
+        .control .state .i-icon {
+          width: 56px;
+          height: 56px;
+        }
+        .control .i-icon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
   }
+
   .el-row {
     height: 100%;
     width: 100%;
@@ -89,7 +127,7 @@ onBeforeUnmount(() => {
       &:nth-of-type(2) {
         padding-right: 0 !important;
       }
-      @media (max-width: 910px) {
+      @media (max-width: 910px) and (min-width: 721px) {
         &:nth-of-type(1) {
           display: none;
         }

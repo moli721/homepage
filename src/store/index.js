@@ -15,6 +15,7 @@ export const mainStore = defineStore("main", {
       boxOpenState: false, // 盒子开启状态
       mobileOpenState: false, // 移动端开启状态
       mobileFuncState: false, // 移动端功能区开启状态
+      mobileTabIndex: 0, // 移动端 Tab 索引 (0-首页, 1-功能, 2-导航)
       setOpenState: false, // 设置页面开启状态
       playerState: false, // 当前播放状态
       playerTitle: null, // 当前播放歌曲名
@@ -52,6 +53,15 @@ export const mainStore = defineStore("main", {
       if (value >= 720) {
         this.mobileOpenState = false;
         this.mobileFuncState = false;
+        this.mobileTabIndex = 0;
+      }
+    },
+    // 设置移动端 Tab 索引
+    setMobileTabIndex(index) {
+      this.mobileTabIndex = index;
+      // 切换 Tab 时重置音乐面板状态，避免状态混乱
+      if (index !== 1) {
+        this.musicOpenState = false;
       }
     },
     // 更改播放状态

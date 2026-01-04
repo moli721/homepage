@@ -16,15 +16,8 @@
           <MoreSet />
         </section>
       </div>
-      <!-- 移动端菜单按钮 -->
-      <Icon
-        class="menu"
-        size="24"
-        v-show="!store.backgroundShow"
-        @click="store.mobileOpenState = !store.mobileOpenState"
-      >
-        <component :is="store.mobileOpenState ? CloseSmall : HamburgerButton" />
-      </Icon>
+      <!-- 移动端底部 Tab -->
+      <MobileTab v-show="!store.backgroundShow && !store.setOpenState" />
       <!-- 页脚 -->
       <Transition name="fade" mode="out-in">
         <Footer class="f-ter" v-show="!store.backgroundShow && !store.setOpenState" />
@@ -35,9 +28,7 @@
 
 <script setup>
 import { helloInit, checkDays } from "@/utils/getTime.js";
-import { HamburgerButton, CloseSmall } from "@icon-park/vue-next";
 import { mainStore } from "@/store";
-import { Icon } from "@vicons/utils";
 import Loading from "@/components/Loading.vue";
 import MainLeft from "@/views/Main/Left.vue";
 import MainRight from "@/views/Main/Right.vue";
@@ -45,6 +36,7 @@ import Background from "@/components/Background.vue";
 import Footer from "@/components/Footer.vue";
 import Box from "@/views/Box/index.vue";
 import MoreSet from "@/views/MoreSet/index.vue";
+import MobileTab from "@/components/MobileTab.vue";
 import cursorInit from "@/utils/cursor.js";
 import config from "@/../package.json";
 
@@ -165,28 +157,12 @@ onBeforeUnmount(() => {
       padding: 0 2vw;
     }
   }
-  .menu {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 84%;
-    left: calc(50% - 28px);
-    width: 56px;
-    height: 34px;
-    background: rgb(0 0 0 / 20%);
-    backdrop-filter: blur(10px);
-    border-radius: 6px;
-    transition: transform 0.3s;
-    animation: fade 0.5s;
-    &:active {
-      transform: scale(0.95);
-    }
-    .i-icon {
-      transform: translateY(2px);
-    }
-    @media (min-width: 721px) {
-      display: none;
+  // 移动端 footer 固定在底部 Tab 上方
+  @media (max-width: 720px) {
+    .f-ter {
+      position: fixed;
+      top: auto !important;
+      bottom: 56px;
     }
   }
   @media (max-height: 720px) {
@@ -220,13 +196,6 @@ onBeforeUnmount(() => {
         }
       }
     }
-    .menu {
-      top: 605.64px; // 721px * 0.84
-      left: 170.5px; // 391 * 0.5 - 25px
-      @media (min-width: 391px) {
-        left: calc(50% - 25px);
-      }
-    }
     .f-ter {
       top: 675px; // 721px - 46px
       @media (min-width: 391px) {
@@ -238,9 +207,6 @@ onBeforeUnmount(() => {
     overflow-x: auto;
     .container {
       width: 391px;
-    }
-    .menu {
-      left: 167.5px; // 391px * 0.5 - 28px
     }
     .f-ter {
       width: 391px;

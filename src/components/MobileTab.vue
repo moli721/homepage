@@ -1,0 +1,83 @@
+<template>
+  <div class="mobile-tab">
+    <div
+      v-for="(tab, index) in tabs"
+      :key="index"
+      class="tab-item"
+      :class="{ active: store.mobileTabIndex === index }"
+      @click="store.setMobileTabIndex(index)"
+    >
+      <component :is="tab.icon" theme="filled" size="20" :fill="store.mobileTabIndex === index ? '#fff' : '#ffffffaa'" />
+      <span>{{ tab.label }}</span>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { Home, MusicMenu, ApplicationMenu } from "@icon-park/vue-next";
+import { mainStore } from "@/store";
+
+const store = mainStore();
+
+const tabs = [
+  { label: "首页", icon: Home },
+  { label: "功能", icon: MusicMenu },
+  { label: "导航", icon: ApplicationMenu },
+];
+</script>
+
+<style lang="scss" scoped>
+.mobile-tab {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  animation: fade 0.3s;
+
+  @media (min-width: 721px) {
+    display: none;
+  }
+
+  .tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 20px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    .i-icon {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 2px;
+    }
+
+    span {
+      font-size: 11px;
+      color: #ffffffaa;
+      transition: color 0.2s;
+    }
+
+    &.active {
+      background: rgba(255, 255, 255, 0.15);
+
+      span {
+        color: #fff;
+      }
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+</style>
