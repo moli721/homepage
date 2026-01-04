@@ -119,6 +119,35 @@ watch(
 
     @media (max-width: 720px) {
       max-width: 100%;
+      .logo-img {
+        width: 80px;
+      }
+      .name {
+        height: auto;
+        padding-left: 16px;
+        transform: translateY(-4px);
+        .bg {
+          font-size: 3.5rem;
+        }
+        .sm {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    // 小屏幕进一步缩小
+    @media (max-width: 720px) and (max-height: 700px) {
+      .logo-img {
+        width: 70px;
+      }
+      .name {
+        .bg {
+          font-size: 3rem;
+        }
+        .sm {
+          font-size: 1.2rem;
+        }
+      }
     }
   }
 
@@ -151,30 +180,25 @@ watch(
     }
     @media (max-width: 720px) {
       max-width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      .content .text {
+        margin: 0.5rem 0.8rem;
+        line-height: 1.8rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    // 小屏幕进一步缩小
+    @media (max-width: 720px) and (max-height: 700px) {
+      margin-top: 1rem;
+      padding: 0.6rem;
+      .content .text {
+        margin: 0.4rem 0.6rem;
+        line-height: 1.6rem;
+        font-size: 0.9rem;
+      }
     }
   }
-  // @media (max-width: 390px) {
-  //   .logo {
-  //     flex-direction: column;
-  //     .logo-img {
-  //       display: none;
-  //     }
-  //     .name {
-  //       margin-left: 0;
-  //       height: auto;
-  //       transform: none;
-  //       text-align: center;
-  //       .bg {
-  //         font-size: 3.5rem;
-  //       }
-  //       .sm {
-  //         font-size: 1.4rem;
-  //       }
-  //     }
-  //   }
-  //   .description {
-  //     margin-top: 2.5rem;
-  //   }
-  // }
 }
 </style>

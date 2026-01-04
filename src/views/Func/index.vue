@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
   &.mobile {
     height: auto;
     width: 100%;
-    padding: 0 10px;
+    padding: 0;
     .el-row {
       .el-col {
         &:nth-of-type(1) {
@@ -88,31 +88,6 @@ onBeforeUnmount(() => {
     }
     .left {
       height: auto;
-      // 移动端一言卡片
-      :deep(.hitokoto) {
-        min-height: 140px;
-        padding: 24px;
-        .content .text {
-          font-size: 1.15rem;
-          -webkit-line-clamp: 4;
-        }
-        .content .from {
-          font-size: 1.1rem;
-        }
-      }
-      // 移动端音乐卡片
-      :deep(.music) {
-        min-height: 160px;
-        padding: 24px;
-        .control .state .i-icon {
-          width: 56px;
-          height: 56px;
-        }
-        .control .i-icon {
-          width: 40px;
-          height: 40px;
-        }
-      }
     }
   }
 

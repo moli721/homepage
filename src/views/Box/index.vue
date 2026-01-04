@@ -89,21 +89,38 @@ const handleMobileClick = (e) => {
     height: 100%;
   }
 
-  // 移动端全屏适配
+  // 移动端弹窗样式（非全屏）
   @media (max-width: 720px) {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 32px);
+    height: auto;
+    max-height: calc(100dvh - 180px);
     max-width: 100%;
     margin: 0;
-    border-radius: 0;
-    z-index: 10;
+    border-radius: 12px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+
+    // 添加遮罩层
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
 
     .content {
-      padding: 60px 20px 20px;
+      padding: 50px 20px 20px;
       overflow-y: auto;
+      max-height: calc(100dvh - 220px);
     }
   }
 }

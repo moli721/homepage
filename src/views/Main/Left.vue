@@ -26,8 +26,9 @@ const store = mainStore();
   @media (max-width: 720px) {
     margin-right: 0;
     width: 100%;
-    // 为底部 Tab 和 Footer 留空间
-    padding-bottom: 110px;
+    transform: none;
+    padding: 16px;
+    padding-bottom: 120px; // 为 Footer + Tab 留空间
   }
 }
 </style>

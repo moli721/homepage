@@ -52,6 +52,21 @@ const socialTip = ref("通过这里联系我吧");
     }
   }
 
+  @media (max-width: 720px) {
+    margin-top: 0.8rem;
+    height: 38px;
+  }
+
+  // 小屏幕进一步缩小
+  @media (max-width: 720px) and (max-height: 700px) {
+    margin-top: 0.5rem;
+    height: 36px;
+    .link a .icon {
+      height: 20px;
+      margin: 0 8px;
+    }
+  }
+
   .link {
     display: flex;
     align-items: center;

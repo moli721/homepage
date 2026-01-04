@@ -32,12 +32,14 @@ const tabs = [
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 56px;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 8px;
   z-index: 10;
   animation: fade 0.3s;
 

@@ -156,13 +156,23 @@ onBeforeUnmount(() => {
     @media (max-width: 1200px) {
       padding: 0 2vw;
     }
+    // 移动端适配
+    @media (max-width: 720px) {
+      padding: 0;
+      overflow-x: hidden;
+      .all {
+        padding: 0;
+        overflow-x: hidden;
+      }
+    }
   }
   // 移动端 footer 固定在底部 Tab 上方
   @media (max-width: 720px) {
+    overflow-x: hidden;
     .f-ter {
       position: fixed;
       top: auto !important;
-      bottom: 56px;
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
     }
   }
   @media (max-height: 720px) {
@@ -204,15 +214,13 @@ onBeforeUnmount(() => {
     }
   }
   @media (max-width: 390px) {
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     .container {
-      width: 391px;
+      width: 100%;
     }
     .f-ter {
-      width: 391px;
-    }
-    @media (min-height: 721px) {
-      overflow-y: hidden;
+      width: 100%;
     }
   }
 }

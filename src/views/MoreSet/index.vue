@@ -15,7 +15,7 @@
           <span class="sm">.{{ siteUrl[1] }}</span>
         </div>
         <div class="version">
-          <div class="num">v&nbsp;{{ config.version }}</div>
+          <div class="num">v {{ config.version }}</div>
           <el-tooltip content="Github 源代码仓库" placement="right" :show-arrow="false">
             <github-one class="github" theme="outline" size="24" @click="jumpTo(config.github)" />
           </el-tooltip>
@@ -243,20 +243,21 @@ const jumpTo = (url) => {
     }
   }
 
-  // 移动端全屏适配
+  // 移动端弹窗样式（非全屏）
   @media (max-width: 720px) {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: none;
-    border-radius: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 32px);
+    height: auto;
+    max-height: calc(100dvh - 140px);
+    border-radius: 12px;
     padding: 20px;
     overflow-y: auto;
 
     .close {
-      position: fixed;
+      position: absolute;
       top: 14px;
       right: 14px;
       z-index: 10;

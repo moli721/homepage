@@ -40,12 +40,8 @@ const store = mainStore();
   @media (max-width: 720px) {
     margin-left: 0;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    // 为底部 Tab 和 Footer 留空间
-    padding-bottom: 110px;
+    padding: 16px;
+    padding-bottom: 120px; // 为 Footer + Tab 留空间
   }
 
   .mobile-func {
