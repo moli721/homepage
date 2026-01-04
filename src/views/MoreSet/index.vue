@@ -1,17 +1,15 @@
 <template>
   <div class="set" @mouseenter="closeShow = true" @mouseleave="closeShow = false" @click.stop>
-    <transition name="el-fade-in-linear">
-      <close-one
-        class="close"
-        theme="filled"
-        size="28"
-        fill="#ffffff60"
-        v-show="closeShow"
-        @click="store.setOpenState = false"
-      />
-    </transition>
+    <close-one
+      class="close"
+      theme="filled"
+      size="28"
+      fill="#ffffff60"
+      :style="{ opacity: closeShow || isMobile ? 1 : 0 }"
+      @click="store.setOpenState = false"
+    />
     <el-row :gutter="40">
-      <el-col :span="12" class="left">
+      <el-col :span="12" :xs="24" class="left">
         <div class="logo text-hidden">
           <span class="bg">{{ siteUrl[0] }}</span>
           <span class="sm">.{{ siteUrl[1] }}</span>
@@ -40,7 +38,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12" class="right">
+      <el-col :span="12" :xs="24" class="right">
         <div class="title">
           <setting-two theme="filled" size="28" fill="#ffffff60" />
           <span class="name">全局设置</span>
@@ -59,6 +57,9 @@ import config from "@/../package.json";
 
 const store = mainStore();
 const closeShow = ref(false);
+
+// 判断是否为移动端
+const isMobile = computed(() => store.innerWidth <= 720);
 
 // 站点链接
 const siteUrl = computed(() => {
@@ -237,6 +238,88 @@ const jumpTo = (url) => {
           width: 28px;
           height: 28px;
           margin-right: 6px;
+        }
+      }
+    }
+  }
+
+  // 移动端全屏适配
+  @media (max-width: 720px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    border-radius: 0;
+    padding: 20px;
+    overflow-y: auto;
+
+    .close {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+    }
+
+    .el-row {
+      flex-wrap: wrap;
+      height: auto;
+
+      .left {
+        height: auto;
+        padding: 0 10px !important;
+        margin-bottom: 20px;
+
+        .logo {
+          height: auto;
+          padding-left: 0;
+          text-align: center;
+          transform: none;
+          margin-bottom: 10px;
+
+          .bg {
+            font-size: 3rem;
+          }
+          .sm {
+            font-size: 1.2rem;
+          }
+        }
+
+        .version {
+          justify-content: center;
+          margin-bottom: 15px;
+
+          .num {
+            font-size: 1.5rem;
+          }
+        }
+
+        .update {
+          margin-top: 0;
+          height: auto;
+
+          :deep(.el-card__body) {
+            height: auto;
+
+            .upnote {
+              height: auto;
+              padding: 10px;
+
+              .uptext {
+                padding-bottom: 10px;
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+
+      .right {
+        padding: 0 10px !important;
+
+        .title {
+          justify-content: center;
         }
       }
     }
