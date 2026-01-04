@@ -47,8 +47,12 @@ const changeBg = (type) => {
   } else if (type == 3) {
     bgUrl.value = "https://api.vvhan.com/api/wallpaper/acg";
   } else if (type == 4) {
-    // 自定义壁纸
-    bgUrl.value = "/images/mybackground.png";
+    // 自定义壁纸 - 移动端使用不同图片
+    if (store.innerWidth <= 720) {
+      bgUrl.value = "/images/mobilebackground-jinx.jpg";
+    } else {
+      bgUrl.value = "/images/mybackground.png";
+    }
   }
 };
 
@@ -87,6 +91,21 @@ watch(
   () => store.coverType,
   (value) => {
     changeBg(value);
+  },
+);
+
+// 监听屏幕宽度变化（自定义壁纸模式下切换移动端/桌面端图片）
+watch(
+  () => store.innerWidth,
+  (value) => {
+    if (store.coverType == "4") {
+      const isMobile = value <= 720;
+      const currentIsMobile = bgUrl.value === "/images/mobilebackground-jinx.jpg";
+      // 只在状态变化时切换，避免不必要的重新加载
+      if (isMobile !== currentIsMobile) {
+        changeBg("4");
+      }
+    }
   },
 );
 
