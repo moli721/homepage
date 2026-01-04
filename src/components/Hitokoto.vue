@@ -42,7 +42,7 @@ const openMusicShow = ref(false);
 // 一言数据 - 使用 ref 而非 reactive，确保整体替换
 const hitokotoData = ref({
   text: "这里应该显示一句话",
-  from: "無名",
+  from: "陌离",
 });
 
 // 是否正在加载
