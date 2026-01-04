@@ -32,7 +32,6 @@
 <script setup>
 import { Icon } from "@vicons/utils";
 import { QuoteLeft, QuoteRight } from "@vicons/fa";
-import { Error } from "@icon-park/vue-next";
 import { mainStore } from "@/store";
 const store = mainStore();
 
@@ -58,18 +57,7 @@ const descriptionText = reactive({
 
 // 切换右侧功能区
 const changeBox = () => {
-  if (store.getInnerWidth >= 721) {
-    store.boxOpenState = !store.boxOpenState;
-  } else {
-    ElMessage({
-      message: "当前页面宽度不足以开启盒子",
-      grouping: true,
-      icon: h(Error, {
-        theme: "filled",
-        fill: "#efefef",
-      }),
-    });
-  }
+  store.boxOpenState = !store.boxOpenState;
 };
 
 // 监听状态变化
@@ -163,7 +151,6 @@ watch(
     }
     @media (max-width: 720px) {
       max-width: 100%;
-      pointer-events: none;
     }
   }
   // @media (max-width: 390px) {

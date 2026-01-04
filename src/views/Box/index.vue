@@ -1,25 +1,21 @@
 <template>
-  <div class="box cards" @mouseenter="closeShow = true" @mouseleave="closeShow = false">
-    <transition name="el-fade-in-linear">
-      <close-one
-        class="close"
-        theme="filled"
-        size="28"
-        fill="#ffffff60"
-        v-show="closeShow"
-        @click="store.boxOpenState = false"
-      />
-    </transition>
-    <transition name="el-fade-in-linear">
-      <setting-two
-        class="setting"
-        theme="filled"
-        size="28"
-        fill="#ffffff60"
-        v-show="closeShow"
-        @click="store.setOpenState = true"
-      />
-    </transition>
+  <div class="box cards" @mouseenter="closeShow = true" @mouseleave="closeShow = false" @click="handleMobileClick">
+    <close-one
+      class="close"
+      theme="filled"
+      size="28"
+      fill="#ffffff60"
+      :style="{ opacity: closeShow || isMobile ? 1 : 0 }"
+      @click.stop="store.boxOpenState = false"
+    />
+    <setting-two
+      class="setting"
+      theme="filled"
+      size="28"
+      fill="#ffffff60"
+      :style="{ opacity: closeShow || isMobile ? 1 : 0 }"
+      @click.stop="store.setOpenState = true"
+    />
     <div class="content">
       <!-- 可在此处自定义任意内容 -->
       <TimeCapsule />
@@ -36,6 +32,16 @@ import MoreContent from "@/components/MoreContent.vue";
 
 const store = mainStore();
 const closeShow = ref(false);
+
+// 判断是否为移动端
+const isMobile = computed(() => store.innerWidth <= 720);
+
+// 移动端点击空白区域关闭
+const handleMobileClick = (e) => {
+  if (isMobile.value && e.target.classList.contains('box')) {
+    store.boxOpenState = false;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -81,6 +87,24 @@ const closeShow = ref(false);
     padding: 30px;
     width: 100%;
     height: 100%;
+  }
+
+  // 移动端全屏适配
+  @media (max-width: 720px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    z-index: 10;
+
+    .content {
+      padding: 60px 20px 20px;
+      overflow-y: auto;
+    }
   }
 }
 </style>
