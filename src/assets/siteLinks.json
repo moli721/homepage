@@ -2,36 +2,26 @@
   {
     "icon": "Blog",
     "name": "博客",
-    "link": "https://blog.imsyy.top/"
-  },
-  {
-    "icon": "Cloud",
-    "name": "网盘",
-    "link": "https://pan.imsyy.top/"
-  },
-  {
-    "icon": "CompactDisc",
-    "name": "音乐",
-    "link": "https://music.imsyy.top/"
-  },
-  {
-    "icon": "Compass",
-    "name": "起始页",
-    "link": "https://nav.imsyy.top/"
-  },
-  {
-    "icon": "Book",
-    "name": "网址集",
-    "link": "https://web.imsyy.top/"
-  },
-  {
-    "icon": "Fire",
-    "name": "今日热榜",
-    "link": "https://hot.imsyy.top/"
+    "link": "https://blog.moli721.xyz/"
   },
   {
     "icon": "LaptopCode",
-    "name": "站点监测",
-    "link": "https://status.imsyy.top/"
+    "name": "探针",
+    "link": "https://vps.moli721.xyz/"
+  },
+  {
+    "icon": "CompactDisc",
+    "name": "观影",
+    "link": "https://movie.moli721.xyz/"
+  },
+  {
+    "icon": "Fire",
+    "name": "状态",
+    "link": "https://status.moli721.xyz/"
+  },
+  {
+    "icon": "EnvelopeRegular",
+    "name": "邮箱",
+    "link": "https://mail.moli721.xyz/"
   }
 ]
