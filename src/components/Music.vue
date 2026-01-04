@@ -99,28 +99,28 @@ const playerData = reactive({
 // 开启播放列表
 const openMusicList = () => {
   musicListShow.value = true;
-  playerRef.value.toggleList();
+  playerRef.value?.toggleList();
 };
 
 // 关闭播放列表
 const closeMusicList = () => {
   musicListShow.value = false;
-  playerRef.value.toggleList();
+  playerRef.value?.toggleList();
 };
 
 // 音乐播放暂停
 const changePlayState = () => {
-  playerRef.value.playToggle();
+  playerRef.value?.playToggle();
 };
 
 // 音乐上下曲
 const changeMusicIndex = (type) => {
-  playerRef.value.changeSong(type);
+  playerRef.value?.changeSong(type);
 };
 
 // 跳转到指定进度
 const seekTo = (percent) => {
-  playerRef.value.seekTo(percent);
+  playerRef.value?.seekTo(percent);
 };
 
 onMounted(() => {
@@ -143,7 +143,7 @@ watch(
   () => volumeNum.value,
   (value) => {
     store.musicVolume = value;
-    playerRef.value.changeVolume(store.musicVolume);
+    playerRef.value?.changeVolume(store.musicVolume);
   },
 );
 </script>
