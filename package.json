@@ -1,8 +1,8 @@
 {
   "name": "home",
-  "author": "imsyy",
-  "github": "https://github.com/imsyy/home",
-  "home": "https://imsyy.top",
+  "author": "moli721",
+  "github": "https://github.com/moli721/homepage",
+  "home": "https://moli721.xyz",
   "private": true,
   "version": "4.1.4",
   "type": "module",
@@ -41,5 +41,6 @@
     "vite": "^4.5.3",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-pwa": "^0.14.7"
-  }
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
