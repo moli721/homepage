@@ -137,6 +137,13 @@ const onPause = () => {
 
 // 音频时间更新事件
 const onTimeUp = () => {
+  // 更新播放进度
+  const audio = player.value.audioRef;
+  if (audio && audio.duration) {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    store.playerProgress = progress;
+  }
+
   let lyrics = player.value.aplayer.lyrics[playIndex.value];
   let lyricIndex = player.value.aplayer.lyricIndex;
   if (!lyrics || !lyrics[lyricIndex]) {
@@ -174,6 +181,14 @@ const toggleList = () => {
   player.value.toggleList();
 };
 
+// 跳转到指定进度 (百分比 0-100)
+const seekTo = (percent) => {
+  const audio = player.value.audioRef;
+  if (audio && audio.duration) {
+    audio.currentTime = (percent / 100) * audio.duration;
+  }
+};
+
 // 加载音频错误
 const loadMusicError = () => {
   let notice = "";
@@ -197,7 +212,7 @@ const loadMusicError = () => {
 };
 
 // 暴露子组件方法
-defineExpose({ playToggle, changeVolume, changeSong, toggleList });
+defineExpose({ playToggle, changeVolume, changeSong, toggleList, seekTo });
 </script>
 
 <style lang="scss" scoped>

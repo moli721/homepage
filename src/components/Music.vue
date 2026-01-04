@@ -118,6 +118,11 @@ const changeMusicIndex = (type) => {
   playerRef.value.changeSong(type);
 };
 
+// 跳转到指定进度
+const seekTo = (percent) => {
+  playerRef.value.seekTo(percent);
+};
+
 onMounted(() => {
   // 空格键事件
   window.addEventListener("keydown", (e) => {
@@ -130,6 +135,7 @@ onMounted(() => {
   });
   // 挂载方法至 window
   window.$openList = openMusicList;
+  window.$seekTo = seekTo;
 });
 
 // 监听音量变化
