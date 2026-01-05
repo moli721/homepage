@@ -1,69 +1,87 @@
-import { defineStore } from "pinia";
+/**
+ * Store 统一导出
+ *
+ * 重构说明：
+ * - 原 mainStore 已拆分为三个独立 Store
+ * - usePlayerStore: 音乐播放器状态
+ * - useUIStore: UI 状态（窗口、面板等）
+ * - useSettingsStore: 用户设置（持久化）
+ *
+ * 为保持向后兼容，mainStore 作为组合 Store 保留
+ */
+
+import { defineStore, storeToRefs } from "pinia";
+import { usePlayerStore } from "./player";
+import { useUIStore } from "./ui";
+import { useSettingsStore } from "./settings";
+import { BREAKPOINTS } from "@/utils/constants";
+
+// 导出独立 Store（推荐使用）
+export { usePlayerStore } from "./player";
+export { useUIStore } from "./ui";
+export { useSettingsStore } from "./settings";
 
 // Tab 切换节流时间（毫秒）
 const TAB_SWITCH_THROTTLE = 350;
 let lastTabSwitchTime = 0;
 
+/**
+ * 兼容性 Store（向后兼容）
+ * @deprecated 请使用 usePlayerStore, useUIStore, useSettingsStore
+ */
 export const mainStore = defineStore("main", {
   state: () => {
     return {
-      imgLoadStatus: false, // 壁纸加载状态
-      innerWidth: null, // 当前窗口宽度
-      coverType: "4", // 壁纸种类 (0-默认,1-每日一图,2-随机风景,3-随机动漫,4-自定义)
-      siteStartShow: false, // 建站日期显示
-      musicClick: false, // 音乐链接是否跳转
-      musicIsOk: false, // 音乐是否加载完成
-      musicVolume: 0, // 音乐音量;
-      musicOpenState: false, // 音乐面板开启状态
-      backgroundShow: false, // 壁纸展示状态
-      boxOpenState: false, // 盒子开启状态
-      mobileOpenState: false, // 移动端开启状态
-      mobileFuncState: false, // 移动端功能区开启状态
-      mobileTabIndex: 0, // 移动端 Tab 索引 (0-首页, 1-功能, 2-导航)
-      mobileTabSwitching: false, // Tab 切换中状态
-      setOpenState: false, // 设置页面开启状态
-      playerState: false, // 当前播放状态
-      playerTitle: null, // 当前播放歌曲名
-      playerArtist: null, // 当前播放歌手名
-      playerLrc: "歌词加载中", // 当前播放歌词
-      playerProgress: 0, // 播放进度百分比 (0-100)
-      playerLrcShow: true, // 是否显示底栏歌词
-      footerBlur: true, // 底栏模糊
-      playerAutoplay: false, // 是否自动播放
-      playerLoop: "all", // 循环播放 "all", "one", "none"
-      playerOrder: "list", // 循环顺序 "list", "random"
+      // UI 状态
+      imgLoadStatus: false,
+      innerWidth: null,
+      backgroundShow: false,
+      boxOpenState: false,
+      mobileOpenState: false,
+      mobileFuncState: false,
+      mobileTabIndex: 0,
+      mobileTabSwitching: false,
+      setOpenState: false,
+      musicOpenState: false,
+
+      // 播放器状态
+      musicIsOk: false,
+      playerState: false,
+      playerTitle: null,
+      playerArtist: null,
+      playerLrc: "歌词加载中",
+      playerProgress: 0,
+
+      // 用户设置（持久化）
+      coverType: "4",
+      siteStartShow: false,
+      musicClick: false,
+      musicVolume: 0,
+      playerLrcShow: true,
+      footerBlur: true,
+      playerAutoplay: false,
+      playerLoop: "all",
+      playerOrder: "list",
     };
   },
   getters: {
-    // 获取歌词
-    getPlayerLrc(state) {
-      return state.playerLrc;
-    },
-    // 获取歌曲信息
-    getPlayerData(state) {
-      return {
-        name: state.playerTitle,
-        artist: state.playerArtist,
-      };
-    },
-    // 获取页面宽度
-    getInnerWidth(state) {
-      return state.innerWidth;
-    },
+    getPlayerLrc: (state) => state.playerLrc,
+    getPlayerData: (state) => ({
+      name: state.playerTitle,
+      artist: state.playerArtist,
+    }),
+    getInnerWidth: (state) => state.innerWidth,
   },
   actions: {
-    // 更改当前页面宽度
     setInnerWidth(value) {
       this.innerWidth = value;
-      if (value >= 720) {
+      if (value >= BREAKPOINTS.MOBILE) {
         this.mobileOpenState = false;
         this.mobileFuncState = false;
         this.mobileTabIndex = 0;
       }
     },
-    // 设置移动端 Tab 索引（带节流）
     setMobileTabIndex(index) {
-      // 节流：防止快速连续切换
       const now = Date.now();
       if (now - lastTabSwitchTime < TAB_SWITCH_THROTTLE) {
         return;
@@ -73,33 +91,23 @@ export const mainStore = defineStore("main", {
       }
       lastTabSwitchTime = now;
       this.mobileTabIndex = index;
-      // 切换 Tab 时重置音乐面板状态，避免状态混乱
       if (index !== 1) {
         this.musicOpenState = false;
       }
     },
-    // 更改播放状态
     setPlayerState(value) {
-      if (value) {
-        this.playerState = false;
-      } else {
-        this.playerState = true;
-      }
+      this.playerState = !value;
     },
-    // 更改歌词
     setPlayerLrc(value) {
       this.playerLrc = value;
     },
-    // 更改播放进度
     setPlayerProgress(value) {
       this.playerProgress = value;
     },
-    // 更改歌曲数据
     setPlayerData(title, artist) {
       this.playerTitle = title;
       this.playerArtist = artist;
     },
-    // 更改壁纸加载状态
     setImgLoadStatus(value) {
       this.imgLoadStatus = value;
     },

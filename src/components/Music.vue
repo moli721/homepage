@@ -123,19 +123,30 @@ const seekTo = (percent) => {
   playerRef.value?.seekTo(percent);
 };
 
+// 空格键事件处理函数
+const handleKeydown = (e) => {
+  if (!store.musicIsOk) {
+    return;
+  }
+  if (e.code === "Space") {
+    changePlayState();
+  }
+};
+
 onMounted(() => {
   // 空格键事件
-  window.addEventListener("keydown", (e) => {
-    if (!store.musicIsOk) {
-      return;
-    }
-    if (e.code == "Space") {
-      changePlayState();
-    }
-  });
+  window.addEventListener("keydown", handleKeydown);
   // 挂载方法至 window
   window.$openList = openMusicList;
   window.$seekTo = seekTo;
+});
+
+onBeforeUnmount(() => {
+  // 清理事件监听器
+  window.removeEventListener("keydown", handleKeydown);
+  // 清理 window 上的方法
+  delete window.$openList;
+  delete window.$seekTo;
 });
 
 // 监听音量变化
