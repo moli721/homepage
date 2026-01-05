@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
 
+// Tab 切换节流时间（毫秒）
+const TAB_SWITCH_THROTTLE = 350;
+let lastTabSwitchTime = 0;
+
 export const mainStore = defineStore("main", {
   state: () => {
     return {
@@ -16,6 +20,7 @@ export const mainStore = defineStore("main", {
       mobileOpenState: false, // 移动端开启状态
       mobileFuncState: false, // 移动端功能区开启状态
       mobileTabIndex: 0, // 移动端 Tab 索引 (0-首页, 1-功能, 2-导航)
+      mobileTabSwitching: false, // Tab 切换中状态
       setOpenState: false, // 设置页面开启状态
       playerState: false, // 当前播放状态
       playerTitle: null, // 当前播放歌曲名
@@ -56,8 +61,17 @@ export const mainStore = defineStore("main", {
         this.mobileTabIndex = 0;
       }
     },
-    // 设置移动端 Tab 索引
+    // 设置移动端 Tab 索引（带节流）
     setMobileTabIndex(index) {
+      // 节流：防止快速连续切换
+      const now = Date.now();
+      if (now - lastTabSwitchTime < TAB_SWITCH_THROTTLE) {
+        return;
+      }
+      if (this.mobileTabIndex === index) {
+        return;
+      }
+      lastTabSwitchTime = now;
       this.mobileTabIndex = index;
       // 切换 Tab 时重置音乐面板状态，避免状态混乱
       if (index !== 1) {

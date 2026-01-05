@@ -108,6 +108,11 @@ onMounted(() => {
   height: 100%;
   padding: 20px;
   animation: fade 0.5s;
+
+  @media (max-width: 720px) {
+    min-height: 140px; // 移动端固定最小高度
+  }
+
   .open-music {
     width: 100%;
     position: absolute;

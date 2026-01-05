@@ -7,7 +7,7 @@
   <Transition name="fade" mode="out-in">
     <main id="main" v-if="store.imgLoadStatus">
       <div class="container" v-show="!store.backgroundShow">
-        <section class="all" v-show="!store.setOpenState">
+        <section class="all" ref="mainContentRef" v-show="!store.setOpenState">
           <MainLeft />
           <MainRight v-show="!store.boxOpenState" />
           <Box v-show="store.boxOpenState" />
@@ -24,6 +24,8 @@
       </Transition>
     </main>
   </Transition>
+  <!-- 自定义右键菜单 -->
+  <ContextMenu ref="contextMenuRef" />
 </template>
 
 <script setup>
@@ -37,10 +39,31 @@ import Footer from "@/components/Footer.vue";
 import Box from "@/views/Box/index.vue";
 import MoreSet from "@/views/MoreSet/index.vue";
 import MobileTab from "@/components/MobileTab.vue";
+import ContextMenu from "@/components/ContextMenu.vue";
 import cursorInit from "@/utils/cursor.js";
+import { useSwipe } from "@/utils/useSwipe.js";
 import config from "@/../package.json";
 
 const store = mainStore();
+
+// 移动端滑动切换 Tab
+const mainContentRef = ref(null);
+const contextMenuRef = ref(null);
+const { bindSwipe, unbindSwipe } = useSwipe({
+  threshold: 50,
+  onSwipeLeft: () => {
+    if (store.innerWidth <= 720 && !store.boxOpenState && !store.setOpenState) {
+      const nextIndex = Math.min(store.mobileTabIndex + 1, 2);
+      store.setMobileTabIndex(nextIndex);
+    }
+  },
+  onSwipeRight: () => {
+    if (store.innerWidth <= 720 && !store.boxOpenState && !store.setOpenState) {
+      const prevIndex = Math.max(store.mobileTabIndex - 1, 0);
+      store.setMobileTabIndex(prevIndex);
+    }
+  },
+});
 
 // 页面宽度
 const getWidth = () => {
@@ -68,17 +91,29 @@ watch(
   },
 );
 
+// 图片加载完成后绑定滑动手势
+watch(
+  () => store.imgLoadStatus,
+  (loaded) => {
+    if (loaded) {
+      nextTick(() => {
+        if (mainContentRef.value) {
+          bindSwipe(mainContentRef.value);
+        }
+      });
+    }
+  },
+  { immediate: true }, // 立即执行一次，处理页面刷新时已加载的情况
+);
+
 onMounted(() => {
   // 自定义鼠标
   cursorInit();
 
-  // 屏蔽右键
-  document.oncontextmenu = () => {
-    ElMessage({
-      message: "为了浏览体验，本站禁用右键",
-      grouping: true,
-      duration: 2000,
-    });
+  // 自定义右键菜单
+  document.oncontextmenu = (e) => {
+    e.preventDefault();
+    contextMenuRef.value?.show(e);
     return false;
   };
 
@@ -114,6 +149,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", getWidth);
+  // 解绑滑动手势
+  if (mainContentRef.value) {
+    unbindSwipe(mainContentRef.value);
+  }
 });
 </script>
 

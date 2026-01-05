@@ -88,6 +88,7 @@ onBeforeUnmount(() => {
     }
     .left {
       height: auto;
+      min-height: 180px; // 移动端固定最小高度，防止动画时塌陷
     }
   }
 

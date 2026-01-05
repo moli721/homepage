@@ -3,6 +3,7 @@
     <div
       v-for="(tab, index) in tabs"
       :key="index"
+      v-ripple
       class="tab-item"
       :class="{ active: store.mobileTabIndex === index }"
       @click="store.setMobileTabIndex(index)"
@@ -54,31 +55,37 @@ const tabs = [
     justify-content: center;
     padding: 6px 20px;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 
     .i-icon {
       width: 20px;
       height: 20px;
       margin-bottom: 2px;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     span {
       font-size: 11px;
       color: #ffffffaa;
-      transition: color 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &.active {
       background: rgba(255, 255, 255, 0.15);
 
+      .i-icon {
+        transform: scale(1.1);
+      }
+
       span {
         color: #fff;
+        font-weight: 500;
       }
     }
 
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.92);
     }
   }
 }

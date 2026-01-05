@@ -6,12 +6,15 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 // swiper
 import "swiper/css";
+// 涟漪效果指令
+import { vRipple } from "@/utils/ripple.js";
 
 const app = createApp(App);
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 app.use(pinia);
+app.directive("ripple", vRipple);
 app.mount("#app");
 
 // PWA

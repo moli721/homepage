@@ -1,14 +1,16 @@
 <template>
   <!-- 桌面端始终显示，移动端根据 Tab 显示不同内容 -->
   <div class="right" :class="{ 'mobile-hidden': store.innerWidth <= 720 && store.mobileTabIndex === 0 }">
-    <!-- 移动端：功能区和导航区始终渲染，用 v-show 切换显示 -->
+    <!-- 移动端：功能区和导航区用过渡动画切换 -->
     <template v-if="store.innerWidth <= 720">
-      <div class="mobile-func" v-show="store.mobileTabIndex === 1">
-        <Func />
-      </div>
-      <div class="mobile-links" v-show="store.mobileTabIndex === 2">
-        <Link />
-      </div>
+      <Transition name="fade-slide" mode="out-in">
+        <div class="mobile-func" v-if="store.mobileTabIndex === 1" key="func">
+          <Func />
+        </div>
+        <div class="mobile-links" v-else-if="store.mobileTabIndex === 2" key="links">
+          <Link />
+        </div>
+      </Transition>
     </template>
     <!-- 桌面端：正常显示 -->
     <template v-else>
@@ -32,9 +34,7 @@ const store = mainStore();
   margin-left: 0.75rem;
 
   &.mobile-hidden {
-    visibility: hidden;
-    position: absolute;
-    pointer-events: none;
+    display: none;
   }
 
   @media (max-width: 720px) {
@@ -54,5 +54,21 @@ const store = mainStore();
   .mobile-links {
     width: 100%;
   }
+}
+
+// 淡入淡出 + 轻微滑动
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>
