@@ -1,54 +1,61 @@
-English | [Chinese](./README.md)
-
-> [!IMPORTANT]
-> ## 致大家
-> This project was originally just a simple homepage. However, as more and more friends discovered this project, it received a lot of undue attention. Moreover, as a work of a beginner in front-end development, its code is quite messy and of low quality. In addition, this project has also been resold by many unknown resource or download sites, causing many unsuspecting buyers to find my contact information from the source code to consult on problems or request features. But due to current personal life reasons, and I have never gained any benefits from this project, so I am unable to maintain this project. This repository will not be archived. We will actively accept PRs from all the experts, but no updates will be made for any new features or bugs. Please understand!
+English | [中文](./README.md)
 
 <p>
-<strong><h2>Homepage</h2></strong>
-Simple little homepage, had enough of the original one and made a new one
+<strong><h2>Moli's Homepage</h2></strong>
+A personal homepage project based on <a href="https://github.com/imsyy/home">無名の主页</a>
 </p>
 
-![無名の主页](https://s2.loli.net/2022/07/14/K5JigfvDoNewtuS.webp)
-
->The logo font on the home page has been compressed, so if you use a font other than this logo, it will change back to the default font, Here is the [full font](https://file.4everland.app/font/Other/Pacifico-Regular.ttf)  
+![Moli's Homepage](/screenshots/main.jpg)
 
 ### Demo
 
->Due to CDN caching, you may need `Ctrl` + `F5` to force a browser cache refresh to see the latest results
+- [Moli's Homepage](https://moli721.xyz)
 
-- [無名の主页](https://www.imsyy.top)
-- [無名の主页 - Dev](https://home-imsyy.vercel.app)
-- [無名の主页 - Standby](https://home-5iw.pages.dev)
+### About
 
-### Functions
+This project is forked from [imsyy/home](https://github.com/imsyy/home) (original project archived). It includes many optimizations and feature enhancements. Thanks to the original author [@imsyy](https://github.com/imsyy) for the open source contribution.
 
-- [x] Loading animation
-- [x] Site description
-- [x] Hitokoto
-- [x] Date and time
-- [x] Live weather
-- [x] Time progress bar
-- [x] Music player
-- [x] Mobile adaptation
+### Improvements Over Original Project
 
-* [ ] Player cancels using Aplayer
+#### New Features
+
+- [x] Custom wallpaper (separate settings for mobile/desktop)
+- [x] Music player progress bar (drag and click to seek)
+- [x] Mobile bottom Tab navigation (Home/Features/Links)
+- [x] Hitokoto transition animation optimization
+- [x] Moe ICP badge display
+
+#### Experience Optimization
+
+- [x] Smooth progress bar animation (RAF interpolation)
+- [x] Mobile box fullscreen adaptation
+- [x] Settings page mobile adaptation
+- [x] Mobile Hitokoto and music card style optimization
+
+#### Bug Fixes
+
+- [x] Fixed Music component null pointer error
+- [x] Fixed music interruption when switching tabs on mobile
+- [x] Fixed favicon browser cache issue
+
+### Future Plans
+
+- [ ] Further optimize desktop and mobile interaction experience
+- [ ] Add more personalization options
+- [ ] Optimize page loading performance
+- [ ] Add more utility components
+- [ ] Improve dark mode support
+- [ ] Migrate to TypeScript (optional)
 
 ### Deployment
 
-* **Installation** [node.js](https://nodejs.org/zh-cn/) **Environment**
-
-  > node > 16.16.0  
-  > npm > 8.15.0
-  
-* Then run the `cmd` terminal with **administrator privileges** and `cd` to the project root directory
-* In the `terminal` type:
+#### Manual Deployment
 
 ```bash
 # Install pnpm
 npm install -g pnpm
 
-# Install the dependencies
+# Install dependencies
 pnpm install
 
 # Preview
@@ -58,91 +65,77 @@ pnpm dev
 pnpm build
 ```
 
-> Once the build is complete, the files in the `dist` folder can be uploaded to the server or imported and automatically deployed with one click using a hosting platform such as `Vercel`.
+After building, static resources will be generated in the `dist` directory.
 
-### Weather
+#### Vercel Deployment
 
-Weather and area access requires `高德开放平台` related API
+1. Fork this repository to your GitHub account
+2. Copy `.env.example` and rename it to `.env`
+3. Modify the `.env` file as needed
+4. Import the project in Vercel and deploy
 
-- Go to [高德开放平台控制台](https://console.amap.com/dev/index) to create a `Key` of type `Web Service` and fill the `Key` into `VITE_WEATHER_KEY` in `.env` 
+### Configuration
 
-It can also be replaced by other methods
+#### Environment Variables
 
-### Music
+Please refer to the `.env.example` file to configure:
 
->This project uses the `Aplayer` music player based on `MetingJS` for quick song list customization  
->*Only supported in **Mainland China**
+- Site information (author, URL, ICP number, etc.)
+- Weather API Key (Amap Open Platform)
+- Music player configuration (playlist ID, server, etc.)
 
-Please change the song related parameters in the `.env` file to customize the song list
+#### Site Links
 
-```bash
-# Songs API address
-VITE_SONG_API = "https://api-meting.imsyy.top"
-# Song server ( netease-netease, tencent-qq music )
-VITE_SONG_SERVER = "netease"
-# Playback type ( song-song, playlist-playlist, album-album, search-search, artist-artist )
-VITE_SONG_TYPE = "playlist"
-# Playback ID
-VITE_SONG_ID = "7452421335"
-```
+Customize navigation links in `src/assets/siteLinks.json`.
 
-### Fonts
+#### Social Links
 
-Now using `HarmonyOS Sans` open source font, using font splitting to improve loading speed
+Customize social links in `src/assets/socialLinks.json`.
 
->Because this site's `CDN` has opened anti-leech, **non-site domain name is not accessible**, please change the font import link to the following content, otherwise **custom fonts will be invalid**
->
->`https://cdn.jsdelivr.net/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css`
+### Tech Stack
 
-<details>
-<summary>old way</summary>
+- [Vue 3](https://vuejs.org/) - Progressive JavaScript Framework
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
+- [Pinia](https://pinia.vuejs.org/) - Vue State Management
+- [Element Plus](https://element-plus.org/) - Vue 3 Component Library
+- [Aplayer](https://aplayer.js.org/) - Music Player
 
->As Chinese fonts are introduced in this project, Chinese fonts need to be compressed to improve the loading speed of the page (you can also cancel the use of Chinese fonts)
+### Changelog
 
-#### Chinese font removal traditional
+#### v4.3.0
 
-- Install `Python 3.7` and `pip`
-- Run `pip install fonttools`
-- Download [sc_unicode.txt](https://gist.githubusercontent.com/imaegoo/d64e5088b723c2e02c40985f55ff12db/raw/5ebd2ce49418c73459a9dfe050483409306a6c1d/sc_unicode.txt)
-- Run `pyftsubset font-name.ttf --unicodes-file=sc_unicode.txt`
+- Refactored Store architecture into three independent modules:
+  - `usePlayerStore` - Music player state
+  - `useUIStore` - UI state management
+  - `useSettingsStore` - User settings (persisted)
+- Added `constants.js` for unified management of breakpoints and configuration
+- Fixed memory leak in Music component event listeners
+- Enhanced API layer: added request timeout and unified error handling
+- Improved code quality while maintaining backward compatibility
 
-#### fonts further compressed
+#### v4.2.0
 
-- Compile and install ``Google woff2``
+- Added mobile bottom Tab navigation
+- Added music player progress bar component
+- Optimized mobile box fullscreen adaptation
+- Fixed settings page mobile adaptation issues
 
-```bash
-sudo apt-get install -y git g++ make
-git clone --recursive https://github.com/google/woff2.git
-cd woff2
-make clean all
-```
+#### v4.1.0
 
-- Compress the font again
+- Added custom wallpaper feature
+- Support separate wallpaper settings for mobile/desktop
+- Optimized Hitokoto component transition animation
 
-```
-. /woff2_compress . /font_name.ttf
-```
+### Acknowledgments
 
-- Eventually the original font can be slow loaded, **load the compressed font first**
+- [imsyy/home](https://github.com/imsyy/home) - Original project author
+- [Hitokoto](https://hitokoto.cn/)
+- [Amap Open Platform](https://lbs.amap.com/)
 
->For more information, please go to [虹墨空间站](https://www.imaegoo.com/2020/chinese-font-compress/) to view the original article
+### License
 
-</details>
+This project is based on the original project for secondary development and follows the original project's open source license.
 
-### Technology Stack
+---
 
-* [Vue](https://cn.vuejs.org/)
-* [Vite](https://vitejs.cn/vite3-cn/)
-* [Pinia](https://pinia.vuejs.org/zh/)
-* [IconPark](https://iconpark.oceanengine.com/official)
-* [xicons](https://xicons.org/)
-* [Aplayer](https://aplayer.js.org/)
-
-### API
-
-* [韩小韩 WebAPI 接口](https://api.vvhan.com/)
-* [搏天 API](https://api.btstu.cn/doc/sjbz.php)
-* [高德开放平台](https://lbs.amap.com/)
-* [Hitokoto 一言](https://hitokoto.cn/)
-
-<a title="SSL" target="_blank" href="https://myssl.com/seal/detail?domain=blog.imsyy.top"><img src="https://img.shields.io/badge/MySSL-安全认证-brightgreen"></a>&nbsp;<a title="CDN" target="_blank" href="https://cdnjs.com/"><img src="https://img.shields.io/badge/CDN-Cloudflare-blue"></a>&nbsp;<a title="Copyright" target="_blank" href="https://imsyy.top/"><img src="https://img.shields.io/badge/Copyright%20%C2%A9%202020--2023-%E7%84%A1%E5%90%8D-red"></a>
+<a title="Copyright" target="_blank" href="https://moli721.xyz/"><img src="https://img.shields.io/badge/Copyright%20%C2%A9%202024--2025-Moli-blue"></a>

@@ -4,7 +4,7 @@
   "github": "https://github.com/moli721/homepage",
   "home": "https://moli721.xyz",
   "private": true,
-  "version": "4.2.0",
+  "version": "4.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
